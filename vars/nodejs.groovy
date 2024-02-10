@@ -20,6 +20,9 @@ def sonarChecks() {
 def call() {
     pipeline {
         agent any
+        parameters {
+            string(name: 'COMPONENT', defaultValue: '', description: 'Component name for linting and scanning')
+        }
         stages {
             stage('Lint Checks') {
                 steps {
