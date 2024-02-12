@@ -11,17 +11,11 @@ def lintChecks() {
 }
 
 def sonarChecks() {
-    def sonarScannerCommand = """
-        sonar-scanner \
-        -Dsonar.host.url=http://172.31.2.205:9000 \
-        -Dsonar.sources=. \
-        -Dsonar.projectKey=${COMPONENT} \
-        -Dsonar.login=admin \
-        -Dsonar.password=password
+    sh """
+        sonar-scanner -Dsonar.host.url=http://172.31.2.205:9000 -Dsonar.sources=. -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
     """
-    
-    sh sonarScannerCommand.trim()
 }
+
 
 
 // call is the default function which will be called when you call the filename
