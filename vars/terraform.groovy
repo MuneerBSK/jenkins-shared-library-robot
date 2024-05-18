@@ -14,7 +14,6 @@ def call() {
 
             stage('Terraform Init') {
                 sh ''' 
-                    
                     terrafile -f env-${ENV}/Terrafile
                     terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
                 '''
@@ -22,7 +21,6 @@ def call() {
 
             stage('Terraform Plan') {
                 sh ''' 
-
                     terraform plan -var-file=env-${ENV}/${ENV}.tfvars
                 '''
             }
@@ -30,7 +28,6 @@ def call() {
             stage('Terraform Apply ') {
                 
                    sh '''
-
                     terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars -auto-approve
                 '''
                 }
