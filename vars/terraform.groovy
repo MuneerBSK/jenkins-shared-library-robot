@@ -1,14 +1,9 @@
 def call() {
-
-        if(!env.TFDIR) {
-            env.TFDIR = "./"
-        }
-
         properties([
             parameters([
                 choice(choices: 'dev\nprod', description: "Chose the environment", name: "ENV"),
                 choice(choices: 'apply\ndestroy', description: "Chose the Action", name: "ACTION"),
-                string(choices: 'APP_VERSION', description: "Enter the Backend Version To Ve Deployed - Ignore this if it is a backend component", name: "APP_VERSION"),
+                
             ]),
         ])
         
@@ -19,7 +14,7 @@ def call() {
 
             stage('Terraform Init') {
                 sh ''' 
-                    cd ${TFDIR}
+                    
                     terrafile -f env-${ENV}/Terrafile
                     terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
                 '''
@@ -27,8 +22,7 @@ def call() {
 
             stage('Terraform Plan') {
                 sh ''' 
-                    cd ${TFDIR}
-                    export TF_VAR_APP_VERSION=${APP_VERSION}
+
                     terraform plan -var-file=env-${ENV}/${ENV}.tfvars
                 '''
             }
@@ -36,8 +30,7 @@ def call() {
             stage('Terraform Apply ') {
                 
                    sh '''
-                    cd ${TFDIR}
-                    export TF_VAR_APP_VERSION=${APP_VERSION}
+
                     terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars -auto-approve
                 '''
                 }
