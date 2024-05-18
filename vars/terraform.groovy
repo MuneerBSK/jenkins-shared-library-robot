@@ -10,7 +10,7 @@ def call() {
         node {
            ansiColor('xterm') {
             sh "rm -rf *"
-            git branch: 'main', url: 'https://github.com/MuneerBSK/${REPONAME}.git'
+            git branch: 'main', url: "https://github.com/MuneerBSK/${REPONAME}.git"
 
             stage('Terraform Init') {
                 sh ''' 
