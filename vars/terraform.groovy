@@ -3,7 +3,6 @@ def call() {
             parameters([
                 choice(choices: 'dev\nprod', description: "Chose the environment", name: "ENV"),
                 choice(choices: 'apply\ndestroy', description: "Chose the Action", name: "ACTION"),
-                
             ]),
         ])
         
