@@ -8,30 +8,30 @@ def call() {
         
         node {
             ansiColor('xterm') {
-            sh "rm -rf *"
-            git branch: 'main', url: "https://github.com/MuneerBSK/${REPONAME}.git"
+                sh "rm -rf *"
+                git branch: 'main', url: "https://github.com/MuneerBSK/${REPONAME}.git"
 
-            stage('Terraform Init') {
-                sh ''' 
-                    terrafile -f env-${ENV}/Terrafile
-                    terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
-                '''
-            }
+                stage('Terraform Init') {
+                    sh ''' 
+                        terrafile -f env-${ENV}/Terrafile
+                        terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
+                    '''
+                }
 
-            stage('Terraform Plan') {
-                sh ''' 
-                    terraform plan -var-file=env-${ENV}/${ENV}.tfvars
-                '''
-            }
+                stage('Terraform Plan') {
+                    sh ''' 
+                        terraform plan -var-file=env-${ENV}/${ENV}.tfvars
+                    '''
+                }
 
-            stage('Terraform Apply ') {              
-                   sh '''
-                    terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars -auto-approve
-                '''
+                stage('Terraform Apply ') {              
+                    sh '''
+                        terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars -auto-approve
+                    '''
+                    }
                 }
             }
         }
-    }
 
 
     // pipeline {
